@@ -64,7 +64,7 @@ LOGGER = getattr(settings, 'AXES_LOGGER', 'axes.watch_login')
 LOCKOUT_TEMPLATE = getattr(settings, 'AXES_LOCKOUT_TEMPLATE', None)
 VERBOSE = getattr(settings, 'AXES_VERBOSE', True)
 
-LOCK_LOGIN_PAGE_FOR_IP = getattr(settings,'LOCK_LOGIN_PAGE_FOR_IP',True) # do we lock the whole login page on failure
+LOCKOUT_LOGIN_PAGE = getattr(settings,'AXES_LOCKOUT_LOGIN_PAGE',True) # do we lock the whole login page on failure
 
 # whitelist and blacklist
 # todo: convert the strings to IPv4 on startup to avoid type conversion during processing
@@ -466,7 +466,7 @@ def create_new_failure_records(request, failures):
         'failures_since_start': failures,
     }
 
-    if LOCK_LOGIN_PAGE_FOR_IP:
+    if LOCKOUT_LOGIN_PAGE:
         # record failed attempt from this IP
         AccessAttempt.objects.create(**params)
 
